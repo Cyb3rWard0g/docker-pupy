@@ -20,13 +20,14 @@ ARG PUPY_HOME=/opt/pupy
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
-# ********** Caldera User ******
+# ********** Pupy User ******
 ENV USER ${PUPY_USER}
 ENV PUPY_UID ${PUPY_UID}
 ENV HOME /home/${PUPY_USER}
 ENV PUPY_GID $PUPY_GID
 ENV PUPY_HOME ${PUPY_HOME}
 ENV PATH ${HOME}/.local/bin:$PATH
+ENV PYTHONPATH ${PYTHONPATH}:${PUPY_HOME}/pupy
 
   # ********** Installing Initial Requirements ***************
 RUN apt-get update --fix-missing && apt-get install -y --no-install-recommends wget sudo nano \
@@ -53,6 +54,11 @@ RUN apt-get update --fix-missing && apt-get install -y --no-install-recommends w
   && rm -rf /var/lib/apt/lists/* /usr/share/doc* /usr/share/man/* /usr/share/info/* \
   # Clone Pupy Repository
   && git clone --recursive https://github.com/alxchk/pupy.git ${PUPY_HOME} \
+  #&& git clone https://github.com/alxchk/pupy.git ${PUPY_HOME} \
+  #&& cd ${PUPY_HOME} \
+  #&& git checkout f8c829dd66449888ec3f4c7d086e607060bca892 \
+  #&& git submodule update --init --recursive \
+  #&& cd ${HOME} \
   # Download latest compiled payload templates
   && wget https://github.com/n1nj4sec/pupy/releases/download/latest/payload_templates.txz \
   && tar xvf payload_templates.txz \
@@ -79,7 +85,8 @@ USER ${USER}
 # Install Py requirements
 RUN python -m pip install --upgrade pip six setuptools wheel \
   && cd ${PUPY_HOME}/pupy \
-  && pip install --upgrade --no-cache-dir -r requirements.txt --user 
+  #&& pip install --upgrade --no-cache-dir mss==4.0.3 --user \
+  && pip install --upgrade --force-reinstall -r requirements.txt --user
 
 USER root
 
