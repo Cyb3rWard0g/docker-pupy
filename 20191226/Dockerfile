@@ -81,10 +81,11 @@ RUN apt-get update --fix-missing && apt-get install -y --no-install-recommends w
 
 USER ${USER}
 
+COPY requirements.txt ${PUPY_HOME}/pupy/
+
 # Install Py requirements
 RUN python -m pip install --upgrade pip six setuptools wheel \
   && cd ${PUPY_HOME}/pupy \
-  && pip install --upgrade --no-cache-dir mss==4.0.3 --user \
   && pip install --upgrade --force-reinstall -r requirements.txt --user
 
 USER root
