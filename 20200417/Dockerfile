@@ -54,11 +54,6 @@ RUN apt-get update --fix-missing && apt-get install -y --no-install-recommends w
   && rm -rf /var/lib/apt/lists/* /usr/share/doc* /usr/share/man/* /usr/share/info/* \
   # Clone Pupy Repository
   && git clone --recursive https://github.com/n1nj4sec/pupy ${PUPY_HOME} \
-  #&& git clone https://github.com/alxchk/pupy.git ${PUPY_HOME} \
-  #&& cd ${PUPY_HOME} \
-  #&& git checkout f8c829dd66449888ec3f4c7d086e607060bca892 \
-  #&& git submodule update --init --recursive \
-  #&& cd ${HOME} \
   # Download latest compiled payload templates
   && wget https://github.com/n1nj4sec/pupy/releases/download/latest/payload_templates.txz \
   && tar xvf payload_templates.txz \

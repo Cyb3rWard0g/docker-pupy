@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   docker-pupy:
-    image: cyb3rward0g/docker-pupy:20200415
+    build: 20200417/
     container_name: docker-pupy
     restart: always
     ports:
